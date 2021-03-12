@@ -40,7 +40,14 @@ router.delete('/:id', (req, res, next) => {
   Projects.remove(req.params.id)
     .then(() => {
       res.status(200).json({message: `Project ${req.params.id} has been deleted`})
-      
+    })
+    .catch(next)
+})
+
+router.get('/:id/actions', (req, res, next) => {
+  Projects.getProjectActions(req.params.id)
+    .then(project => {
+      res.status(200).json(project)
     })
     .catch(next)
 })
