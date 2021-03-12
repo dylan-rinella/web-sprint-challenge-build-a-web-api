@@ -3,8 +3,11 @@ const Projects = require('./projects-model')
 
 const router = express.Router()
 
+//middleware
+const { checkProjectId, validateProject } = require('./projects-middleware')
 
-router.get('/', (req, res, next) => {
+
+router.get('/', validateProject, (req, res, next) => {
   Projects.get()
     .then(project => {
       res.status(200).json(project)
@@ -12,7 +15,7 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', checkProjectId, (req, res, next) => {
   Projects.get(req.params.id)
     .then(project => {
       res.status(200).json(project)
@@ -20,7 +23,7 @@ router.get('/:id', (req, res, next) => {
     .catch(next)
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', validateProject, (req, res, next) => {
   Projects.insert(req.body)
     .then(project => {
       res.status(201).json(project)
@@ -28,7 +31,7 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', checkProjectId, (req, res, next) => {
   Projects.update(req.params.id, req.body)
     .then(project => {
       res.status(200).json(project)
@@ -36,7 +39,7 @@ router.put('/:id', (req, res, next) => {
     .catch(next)
 })
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', checkProjectId, (req, res, next) => {
   Projects.remove(req.params.id)
     .then(() => {
       res.status(200).json({message: `Project ${req.params.id} has been deleted`})

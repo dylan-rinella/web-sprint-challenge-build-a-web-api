@@ -3,7 +3,10 @@ const router = express.Router()
 
 const Actions = require('./actions-model')
 
-router.get('/', (req, res, next) => {
+//middleware
+const { checkActionId, validateAction } = require('./actions-middleware')
+
+router.get('/', validateAction, (req, res, next) => {
   Actions.get()
     .then(action => {
       res.status(200).json(action)
@@ -11,7 +14,7 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', checkActionId, (req, res, next) => {
   Actions.get(req.params.id)
     .then(action => {
       res.status(200).json(action)
@@ -19,7 +22,7 @@ router.get('/:id', (req, res, next) => {
     .catch(next)
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', validateAction, (req, res, next) => {
   Actions.insert(req.body)
     .then(action => {
       res.status(201).json(action)
@@ -27,7 +30,7 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', checkActionId, (req, res, next) => {
   Actions.update(req.params.id, req.body)
     .then(action => {
       res.status(200).json(action)
@@ -35,7 +38,7 @@ router.put('/:id', (req, res, next) => {
     .catch(next)
 })
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', checkActionId, (req, res, next) => {
   Actions.remove(req.params.id)
     .then(() => {
       res.status(200).json({message: `action ${req.params.id} has been deleted`})
