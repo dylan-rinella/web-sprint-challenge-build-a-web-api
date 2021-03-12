@@ -49,10 +49,10 @@ router.delete('/:id', checkActionId, (req, res, next) => {
 
 //catch all
 router.use((err, req, res, next) => { // eslint-disable-line
-  res.status(500).json({
-    message: err.message, // DEV
-    stack: err.stack, // DEV
-    custom: 'something went terrible in the hubs router', // PRODUCTION
+  res.status(400).json({
+    message: err.message,
+    stack: err.stack,
+    custom: 'something went terrible in the actoins router',
   })
 })
 

@@ -55,12 +55,20 @@ router.get('/:id/actions', (req, res, next) => {
     .catch(next)
 })
 
+router.delete('/:id/actions', (req, res, next) => {
+  Projects.remove(req.params.id)
+    .then(project => {
+      res.status(200).json(project)
+    })
+    .catch(next)
+})
+
 
 router.use((err, req, res, next) => { // eslint-disable-line
-  res.status(500).json({
-    message: err.message, // DEV
-    stack: err.stack, // DEV
-    custom: 'something went terrible in the hubs router', // PRODUCTION
+  res.status(400).json({
+    message: err.message,
+    stack: err.stack,
+    custom: 'something went terrible in the projects router',
   })
 })
 

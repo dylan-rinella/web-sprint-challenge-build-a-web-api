@@ -17,7 +17,7 @@ const checkActionId = async (req, res, next) => {
 
 const validateAction = (req, res, next) => {
   if (!req.body) {
-    res.status(422).json({ message: 'action name is required'})
+    res.status(400).json({ message: 'action name is required'})
   } else {
     next()
   }

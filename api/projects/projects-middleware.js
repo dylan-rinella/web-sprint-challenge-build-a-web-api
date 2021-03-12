@@ -17,7 +17,7 @@ const checkProjectId = async (req, res, next) => {
 
 const validateProject = (req, res, next) => {
   if (!req.body) {
-    res.status(422).json({ message: 'project name is required'})
+    res.status(400).json({ message: 'project name is required'})
   } else {
     next()
   }
